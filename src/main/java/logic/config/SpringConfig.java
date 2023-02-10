@@ -44,7 +44,7 @@ public class SpringConfig implements WebMvcConfigurer {//для своей на�
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-        resolver.setTemplateEngine(resolver.getTemplateEngine());
+        resolver.setTemplateEngine(templateEngine());
         registry.viewResolver(resolver);
     }
 }
