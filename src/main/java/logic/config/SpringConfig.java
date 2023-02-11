@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @ComponentScan("logic")
@@ -19,16 +20,18 @@ public class SpringConfig implements WebMvcConfigurer {//для своей на�
     //внедряем ApplicationContext
     private final ApplicationContext context;
     @Autowired
-    public SpringConfig (ApplicationContext context){
+    public SpringConfig (ApplicationContext context) {
         this.context = context;
     }
-//бины для настройки шаблонизатора Thymeleaf
+
+    //бины для настройки шаблонизатора Thymeleaf
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(context);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
         return templateResolver;
     }
 
