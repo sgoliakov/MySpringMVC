@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>All people</title>
+</head>
+<body>
+<!--выведем всех людей -->
+<div th:each="pers : ${people}">
+    <!--сделаем ссылку для каждого человека -->
+    <a th:href="@{/people/{id}(id=${pers.getId()})}"
+       th:text="${pers.getName()}"></a>
+</div>
+</body>
+</html>
