@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head>
     <meta charset="UTF-8">
     <title>All people</title>
@@ -11,5 +11,9 @@
     <a th:href="@{/people/{id}(id=${pers.getId()})}"
        th:text="${pers.getName()}"></a>
 </div>
+<br/>
+<hr/> <!--<hr/> создает горизонтальную линию -->
+<!--саздадим ссылку для перехода на создания нового человека -->
+<a href="/people/new">create new person</a>
 </body>
 </html>

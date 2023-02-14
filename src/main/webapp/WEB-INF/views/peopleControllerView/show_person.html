@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Person</title>
@@ -8,5 +8,12 @@
 <!--вывод на экран -->
 <p th:text="${person.getName()}"></p>
 <p th:text="${person.getId()}"></p>
+<!--добавим ссылку на страницу редактирования человека -->
+<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+<!-- добавим кнопку для удаления человека -->
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+    <input type="submit" value="DELETE"/>
+</form>
+
 </body>
 </html>
