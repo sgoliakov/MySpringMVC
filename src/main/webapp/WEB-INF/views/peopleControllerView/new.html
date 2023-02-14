@@ -7,9 +7,25 @@
 </head>
 <body>
 <!--создадим форму для создания нового человека -->
+<!--пишем код который будет показывать ошибки валидации -->
+
 <form th:method="POST" th:action="@{/people}" th:object="${person}">
     <label for="name">Enter name:</label>
     <input type="text" th:field="*{name}" id="name"/>
+    <!--код для паказа ошибок
+        th:if="${#fields}" - получаем доступ к полям человека
+        #fields.hasErrors('name') - узнаем есть ли ошибки
+        th:errors="*{name} - отобразит смс ошибки для поля name
+        style="color: red" - применим стиль-->
+    <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error name</p>
+    <br/>
+    <label for="age">Enter age</label>
+    <input type="number" th:field="*{age}" id="age">
+    <p style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error name</p>
+    <br/>
+    <label for="mail">Enter mail</label>
+    <input type="text" th:field="*{mail}" id="mail">
+    <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Error name</p>
     <br/>
     <input type="submit" value="Create"/>
 </form>

@@ -1,10 +1,12 @@
 package logic.controllers;
 
+import jakarta.validation.Valid;
 import logic.DAO.PeopleDAO;
 import logic.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -48,10 +50,18 @@ public class PeopleController {
 
     //метод для добавления человека в БД
     @PostMapping()//ничего не указываем(и так по POST запросу "/people" мы попадем в этот метод)
-//@ModelAttribute("person") Person person - само назначит сетеры и засунет в модель атрибут в конце
-    public String addNewPerson(@ModelAttribute("person") Person person) {
+//@ModelAttribute("person") Person person - само создаст newPerson,
+// назначит сетеры и засунет в модель атрибут в конце
+//Аннотация @Valid - будет проверять подходят ли значения
+//если Valid не проходит, то появляется ошибка которая должна помещаться в BindingResult
+    public String addNewPerson(@ModelAttribute("person") @Valid Person person,
+                               BindingResult bindingResult) {
+//можем проверить есть ли ошибки в BindingResult
+        if (bindingResult.hasErrors()) {
+            //то сразу возвращаем форму создания нового человека
+            return "/peopleControllerView/new";
+        }
 //добавим персона в БД
-        System.out.println("tyt2");
         peopleDAO.save(person);
 //как сделать редирект
         return "redirect:/people";//перейдет на страницу со всеми людьми showAllPeople
@@ -63,16 +73,24 @@ public class PeopleController {
         model.addAttribute("person", peopleDAO.getPersonById(id));
         return "/peopleControllerView/edit_person";
     }
-//метод для обновления данных человека
-    @PatchMapping("/{id}")
-    public String updatePerson(@ModelAttribute("person") Person person, @PathVariable("id") int id){
-        peopleDAO.update(person, id);
 
+    //метод для обновления данных человека
+    @PatchMapping("/{id}")
+    public String updatePerson(@ModelAttribute("person") @Valid Person person,
+                               BindingResult bindingResult,
+                               @PathVariable("id") int id) {
+        //можем проверить есть ли ошибки в BindingResult
+        if (bindingResult.hasErrors()) {
+            //то сразу возвращаем форму редактирования человека
+            return "//peopleControllerView/edit_person";
+        }
+        peopleDAO.update(person, id);
         return "redirect:/people";
     }
-//метод для удаления человека
+
+    //метод для удаления человека
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") int id) {
         peopleDAO.delete(id);
 
         return "redirect:/people";

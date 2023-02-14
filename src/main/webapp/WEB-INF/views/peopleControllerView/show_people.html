@@ -9,7 +9,7 @@
 <div th:each="pers : ${people}">
     <!--сделаем ссылку для каждого человека -->
     <a th:href="@{/people/{id}(id=${pers.getId()})}"
-       th:text="${pers.getName()}"></a>
+       th:text="${pers.getName() + ', ' + pers.getAge()}">user</a>
 </div>
 <br/>
 <hr/> <!--<hr/> создает горизонтальную линию -->

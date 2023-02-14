@@ -14,9 +14,9 @@ public class PeopleDAO {
   public PeopleDAO(){
         people = new ArrayList<>();
 
-        people.add(new Person(++PEOPLE_COUNT,"Bob"));
-        people.add(new Person(++PEOPLE_COUNT,"Tom"));
-        people.add(new Person(++PEOPLE_COUNT,"Rob"));
+        people.add(new Person(++PEOPLE_COUNT,"Bob",23,"@mailA"));
+        people.add(new Person(++PEOPLE_COUNT,"Tom",33,"@mailB"));
+        people.add(new Person(++PEOPLE_COUNT,"Rob",43,"@mailC"));
     }
 
     public List<Person> getPeople(){
@@ -36,6 +36,8 @@ public class PeopleDAO {
     public void update(Person person, int id) {
         Person personById = getPersonById(id);
         personById.setName(person.getName());
+        personById.setAge(person.getAge());
+        personById.setName(person.getMail());
     }
 //метод для удаления с помощью лямбда
     public void delete(int id) {
